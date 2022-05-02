@@ -1,7 +1,17 @@
 WITH time_table AS (
-SELECT match.id, match.country_id, league.name AS league_name, season, stage, date, match_api_id, home_team_api_id,
-			away_team_api_id, home_team_goal, away_team_goal, country.name AS country_name,
-			team.team_long_name AS home_team_ln, team.team_short_name AS home_team_sn 
+SELECT match.id, 
+	match.country_id, 
+	league.name AS league_name, 
+	season, stage, 
+	date, 
+	match_api_id, 
+	home_team_api_id,
+	away_team_api_id, 
+	home_team_goal, 
+	away_team_goal, 
+	country.name AS country_name,
+	team.team_long_name AS home_team_ln, 
+	team.team_short_name AS home_team_sn 
 FROM match
 INNER JOIN country
 	ON match.country_id = country.id
@@ -10,19 +20,32 @@ INNER JOIN team
 INNER JOIN league
 	ON match.country_id = league.country_id
 )
-SELECT time_table.id, country_id, season, stage, date, match_api_id, home_team_api_id,
-			away_team_api_id, home_team_goal, away_team_goal, league_name, country_name, home_team_ln, 
-			home_team_sn, team.team_long_name AS away_team_ln, team.team_short_name AS away_team_sn,
-			CASE
-				WHEN time_table.home_team_goal - time_table.away_team_goal > 0 then time_table.home_team_api_id
-				WHEN time_table.home_team_goal - time_table.away_team_goal < 0 then time_table.away_team_api_id
-				ELSE 0
-			END AS match_winner_id,
-			CASE
-				WHEN time_table.home_team_goal - time_table.away_team_goal > 0 then time_table.home_team_sn
-				WHEN time_table.home_team_goal - time_table.away_team_goal < 0 then team.team_short_name
-				ELSE 'draw'
-			END AS match_winner
+SELECT time_table.id, 
+	country_id,
+	season, 
+	stage, 
+	date, 
+	match_api_id,
+	home_team_api_id,
+	away_team_api_id, 
+	home_team_goal,
+	away_team_goal, 
+	league_name, 
+	country_name, 
+	home_team_ln, 
+	home_team_sn, 
+	team.team_long_name AS away_team_ln, 
+	team.team_short_name AS away_team_sn,
+		CASE
+			WHEN time_table.home_team_goal - time_table.away_team_goal > 0 then time_table.home_team_api_id
+			WHEN time_table.home_team_goal - time_table.away_team_goal < 0 then time_table.away_team_api_id
+			ELSE 0
+		END AS match_winner_id,
+		CASE
+			WHEN time_table.home_team_goal - time_table.away_team_goal > 0 then time_table.home_team_sn
+			WHEN time_table.home_team_goal - time_table.away_team_goal < 0 then team.team_short_name
+			ELSE 'draw'
+		END AS match_winner
 FROM time_table
 LEFT JOIN team
 ON time_table.away_team_api_id = team.team_api_id; --таблица со статистикой матчей
@@ -31,6 +54,10 @@ SELECT * FROM player
 INNER JOIN player_attributes
 USING (player_api_id, player_fifa_api_id); --таблица с атрибутами игроков
 
-SELECT * FROM (SELECT team_api_id, team_fifa_api_id, team_long_name, team_short_name FROM team) AS useless_table
+SELECT * FROM (
+	SELECT team_api_id, 
+		team_fifa_api_id, 
+		team_long_name, 
+		team_short_name FROM team) AS some_table
 INNER JOIN team_attributes
 USING (team_api_id, team_fifa_api_id); --таблица с атрибутами команд
