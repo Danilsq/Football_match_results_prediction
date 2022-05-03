@@ -6,7 +6,7 @@
 ____
 The file with the source database could not be uploaded to the repository, but it can be obtained by downloading it from the kaggle website (url: https://www.kaggle.com/code/jacobopedrosa/simple-football-predictions-accurance-75-40/data)
 ____
-In a text file `sql_code.txt` contains queries for a combination of tables from the source database. Accordingly , in the file `match_info.csv` information on the results of each match is generated. The file `team_skills.csv` displays the attributes of the commands, `player_skills.scv` - displays the attributes of the players.
+In a text file `sql_code.txt` contain queries for a combination of tables from the source database. Accordingly , in the file `match_info.csv` information on the results of each match is generated. The file `team_skills.csv` displays the attributes of the commands, `player_skills.scv` - displays the attributes of the players.
 
 In the file `Football_matches_results_prediction.ipynb` the code for solving the problem is given. The stages of work, possible models, results and comments can be found there
  
